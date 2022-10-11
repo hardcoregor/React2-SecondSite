@@ -14,26 +14,87 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 645px) {
+    width: calc(100vw - 30px);
+    margin-top: 15px;
+  }
 }
 
 .content {
-  padding: 40px 0;
+  padding: 0 0 40px;
 
   &__title {
     margin: 35px 0;
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-column-gap: 11px;
+
+    @media (max-width: 1370px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1060px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 730px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   &__top {
+    margin-top: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 1260px) {
+
+      .categories {
+        width: 100%;
+        overflow: auto;
+
+        ul {
+          width: 785px;
+        }
+      }
+
+      .sort {
+        padding-left: 20px;
+
+        b {
+          display: none;
+        }
+      }
+    }
+
+    @media (max-width: 820px) {
+      .categories {
+        margin-bottom: 30px;
+      }
+
+      .sort__label {
+        margin-bottom: 30px;
+      }
+      flex-direction: column-reverse;
+    }
+
+    @media (max-width: 760px) {
+      .categories {
+        ul {
+          li {
+            padding: 8px 20px;
+          }
+        }
+      }
+    }
   }
+
 }
 
 .container {
@@ -43,6 +104,7 @@ body {
   &--cart {
     max-width: 820px;
     margin: 90px auto;
+
     .content__title {
       margin: 0;
     }
@@ -67,6 +129,7 @@ body {
       width: 30px;
       height: 30px;
       margin-right: 10px;
+
       path {
         stroke: $black;
         stroke-width: 1.9;
@@ -99,10 +162,15 @@ body {
           stroke: darken($color: #b6b6b6, $amount: 50);
         }
       }
+
       span {
         color: darken($color: #b6b6b6, $amount: 50);
       }
     }
+  }
+
+  .content__items {
+    display: block;
   }
 
   &__item {
@@ -199,6 +267,7 @@ body {
           height: 11.5px;
           position: relative;
         }
+
         &:hover,
         &:active {
           border-color: darken($color: $gray-line, $amount: 80);
@@ -256,6 +325,7 @@ body {
 
         svg {
           margin-right: 12px;
+
           path {
             fill: transparent;
             stroke-width: 2;
