@@ -1,10 +1,10 @@
 import React from 'react';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizza } from '../redux/slices/pizzaSlice';
 
 import list from '../components/Sort';
 import Categories from '../components/Categories';
@@ -20,10 +20,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
 
-  const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
-  const { items, status } = useSelector((state) => state.pizza);
-
-  const { searchValue } = React.useContext(SearchContext);
+  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizza);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -86,7 +84,10 @@ const Home = () => {
   //   isMounted.current = true;
   // }, [categoryId, sort.sortProperty, currentPage]);
 
-  const pizzas = items.map((obj) => (<PizzaBlock key={obj.id} {...obj} />));
+  const pizzas = items.map((obj) =>
+    <Link key={obj.id} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+    </Link>);
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
   return (
