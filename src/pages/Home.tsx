@@ -1,23 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
+// import Categories from '../components/Categories';
+// import Sort from '../components/Sort';
+// import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
+// import Skeleton from '../components/PizzaBlock/Skeleton';
+// import Pagination from '../components/Pagination/Pagination';
+
+import { Categories, Sort, PizzaBlock, Skeleton, Pagination } from '../components';
+
+import { useAppDispatch } from '../redux/store';
 import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizza } from '../redux/slices/pizzaSlice';
 
-import list from '../components/Sort';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import Pagination from '../components/Pagination/Pagination';
-import { useAppDispatch } from '../redux/store';
-
 const Home: React.FC = () => {
-  const navigate = useNavigate();
-  const isMounted = React.useRef(false);
   const dispatch = useAppDispatch();
-  const isSearch = React.useRef(false);
 
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizza);
@@ -49,8 +46,6 @@ const Home: React.FC = () => {
 
     window.scrollTo(0, 0);
   };
-
-  // React.useEffect(() => {
   //   if (window.location.search) {
   //     const params = qs.parse(window.location.search.substring(1));
 
@@ -69,8 +64,6 @@ const Home: React.FC = () => {
   React.useEffect(() => {
     getPizzas();
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-
-  // React.useEffect(() => {
   //   if(isMounted.current) {
   //     const queryString = qs.stringify({
   //       sortProperty: sort.sortProperty,
